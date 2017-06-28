@@ -8,13 +8,26 @@ var RIDX  = 0;
 var play_flag = false;
 var play_interval = null;
 
-// color template
-var COLOR_TEMPLATE = [
-    [ '#ff4d4d', '#ff6666' ],
-    [ '#80ff80', '#4dff4d' ],
-    [ '#ffff66', '#ffff1a' ],
-    [ '#6699ff', '#0055ff' ],
-];
+// random color function
+// https://stackoverflow.com/a/7638362/466693
+// https://stackoverflow.com/a/13542669/466693
+function random_color_set(){
+  function random_color(){
+    return '#'+Math.random().toString(16).substr(-6);
+  }
+  function shade_blend(p,c0,c1) {
+    var n=p<0?p*-1:p,u=Math.round,w=parseInt;
+    if(c0.length>7){
+      var f=c0.split(","),t=(c1?c1:p<0?"rgb(0,0,0)":"rgb(255,255,255)").split(","),R=w(f[0].slice(4)),G=w(f[1]),B=w(f[2]);
+      return "rgb("+(u((w(t[0].slice(4))-R)*n)+R)+","+(u((w(t[1])-G)*n)+G)+","+(u((w(t[2])-B)*n)+B)+")"
+    } else {
+      var f=w(c0.slice(1),16),t=w((c1?c1:p<0?"#000000":"#FFFFFF").slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF;
+      return "#"+(0x1000000+(u(((t>>16)-R1)*n)+R1)*0x10000+(u(((t>>8&0x00FF)-G1)*n)+G1)*0x100+(u(((t&0x0000FF)-B1)*n)+B1)).toString(16).slice(1)
+    }
+  }
+  var c = random_color();
+  return [ c, shade_blend(0.15, c) ];
+}
 
 // time functions
 function countdown(){
@@ -63,7 +76,7 @@ function redraw(){
 
     // apply to colors
     COLORS = [];
-    var cur_color = COLOR_TEMPLATE[Math.floor(Math.random()*COLOR_TEMPLATE.length)];
+    var cur_color = random_color_set();
     for(i=0; i<SIZE*SIZE; i++){
         COLORS.push( i == RIDX ? cur_color[0] : cur_color[1] );
     }
