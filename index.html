@@ -3,18 +3,6 @@
         <title>Color Block</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
         <link rel="stylesheet" href="./app.css">
-
-        <!-- mobile integration -->
-        <link rel="manifest" href="./manifest.json">
-        <!-- Add to home screen for Safari on iOS -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-title" content="Color Block">
-        <link rel="apple-touch-icon" href="./app.png">
-        <!-- Windows Tile icon -->
-        <meta name="msapplication-TileImage" content="./app.png">
-        <meta name="msapplication-TileColor" content="#2F3BA2">
-
     </head>
     <body>
         <div class='info'>
@@ -35,17 +23,5 @@
             </table>
         </div>
         <script type='text/javascript' src='./app.js'></script>
-        <script type='text/javascript'>
-
-          // register service-worker
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-              .register('./sw.js')
-              .then(function(resp) {
-                console.log('Service Worker Registered', resp.scope);
-              });
-          }
-
-        </script>
     </body>
 </html>
