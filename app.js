@@ -1,7 +1,8 @@
 // config
 var SIZE  = 3;
 var SCORE = 0;
-var TIME  = 30;
+var START_TIME = 30;
+var TIME  = START_TIME;
 var RIDX  = 0;
 
 // game variables
@@ -36,15 +37,25 @@ function countdown(){
 
     if(TIME == 0){
         clearInterval(play_interval);
-        alert("You got score " + SCORE + " !");
+
+        // scoreboard
+        var idx = Score.is_new_record(SCORE);
+        if(idx > -1){
+          var name = prompt("New record! Please enter your name..");
+          Score.update(name, SCORE, idx);
+        }
+        var out = "You got " + SCORE + "\n\n";
+        out += Score.to_s();
+        alert(out);
 
         // reset
         SIZE  = 3;
         SCORE = 0;
-        TIME  = 30;
+        TIME  = START_TIME;
         play_flag = false;
         document.getElementById('score').innerHTML = SCORE;
         document.getElementById('time').innerHTML = TIME;
+        redraw();
     }
 }
 
@@ -97,3 +108,4 @@ function redraw(){
 
 // draw
 redraw();
+document.getElementById('time').innerHTML = TIME;
